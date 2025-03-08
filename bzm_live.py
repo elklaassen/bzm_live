@@ -328,6 +328,8 @@ app.layout = dbc.Container(
         dbc.Row([
             # Street map
             dbc.Col([
+                html.H6(traffic_df['osm.name'][1], style={'margin-top': 50, 'margin-bottom': 20}),
+                html.H6(traffic_df['car_total'][5], style={'margin-top': 50, 'margin-bottom': 20}),
                 dcc.Graph(id='street_map', figure={},className='bg-#F2F2F2'),
             ], width=8),
 
