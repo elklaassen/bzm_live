@@ -20,11 +20,37 @@ from dash import Dash, html, dcc, Output, Input, callback, ctx
 from dash.exceptions import PreventUpdate
 import datetime
 
-import bzm_get_data
-
 DEPLOYED = __name__ != '__main__'
 
 #### Retrieve Data ####
+def get_locations(filepath="https://berlin-zaehlt.de/csv/bzm_telraam_segments.geojson"):
+    df_geojson = pd.read_json(filepath)
+
+    # Flatten the json structure
+    df_geojson = pd.json_normalize(df_geojson['features'])
+
+    # Remove 'properties' from column names for ease of use
+    df_geojson.columns = df_geojson.columns.str.replace('properties.', '', regex=True)
+
+    # Drop uptime and v85 to avoid duplicates as these will come from traffic data
+    df_geojson = df_geojson.drop(['uptime', 'v85'], axis=1)
+
+    # Replace "list" entries (Telraam!) with none
+    for i in range(len(df_geojson)):
+        if isinstance(df_geojson['osm.width'].values[i],list):
+            df_geojson['osm.width'].values[i]=''
+        if isinstance(df_geojson['osm.lanes'].values[i],list):
+            df_geojson['osm.lanes'].values[i]=''
+        if isinstance(df_geojson['osm.maxspeed'].values[i],list):
+            df_geojson['osm.maxspeed'].values[i]=''
+        if isinstance(df_geojson['osm.name'].values[i],list):
+            df_geojson['osm.name'].values[i]=pd.NA
+
+    # Remove segments w/o street name
+    nan_rows = df_geojson[df_geojson['osm.name'].isnull()]
+    return df_geojson.drop(nan_rows.index)
+
+
 def retrieve_data():
 
     # Read geojson data file to access geometry coordinates - using URL
@@ -35,7 +61,7 @@ def retrieve_data():
 
     if not DEPLOYED:
         print('Reading json data...')
-    json_df_features = bzm_get_data.get_locations(geojson_url)
+    json_df_features = get_locations(geojson_url)
 
     # Read traffic data from file
     if not DEPLOYED:
