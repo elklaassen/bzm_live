@@ -190,10 +190,10 @@ def get_options(args=None, json_default="sensor.json"):
 
 if __name__ == "__main__":
     options = get_options()
-    traffic_df = _read_csv(options.months, options.verbose) if options.csv else _read_sql(options)
-    merged_df = merge_data(get_locations(), None, traffic_df)
-    if options.excel:
-        save_df(merged_df, options.excel)
-    save_df(merged_df, "traffic_df_2024_Q4_2025_YTD.csv.gz")
+    #traffic_df = _read_csv(options.months, options.verbose) if options.csv else _read_sql(options)
+    #merged_df = merge_data(get_locations(), None, traffic_df)
+    #if options.excel:
+    #    save_df(merged_df, options.excel)
+    #save_df(merged_df, "traffic_df_2024_Q4_2025_YTD.csv.gz")
     if options.verbose:
         print('Finished.')
