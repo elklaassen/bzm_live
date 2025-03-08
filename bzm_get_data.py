@@ -18,8 +18,8 @@ from datetime import datetime, timedelta
 import pandas as pd
 from sqlalchemy import create_engine
 
-from common import add_month, parse_options
-from datamodel import TrafficCount
+#from common import add_month, parse_options
+#from datamodel import TrafficCount
 
 ASSET_DIR = os.path.join(os.path.dirname(__file__), 'assets')
 CSV_DIR = os.path.join(os.path.dirname(__file__), '..', 'csv')

@@ -21,7 +21,6 @@ from dash.exceptions import PreventUpdate
 import datetime
 
 import bzm_get_data
-import common
 
 DEPLOYED = __name__ != '__main__'
 
@@ -42,8 +41,8 @@ def retrieve_data():
     if not DEPLOYED:
         print('Reading traffic data...')
 
-    with common.Benchmarker(not DEPLOYED, "Load traffic data"):
-        traffic_df = bzm_get_data.merge_data(json_df_features)
+    #with common.Benchmarker(not DEPLOYED, "Load traffic data"):
+    traffic_df = bzm_get_data.merge_data(json_df_features)
 
     """" Can move to bzm_get_data? - Start """
     # Set data types for clean representation
@@ -169,8 +168,8 @@ def update_map_data(df_map_base, df):
 
     return df_map
 
-def serve_layout():
-    return layout(app)
+
+ASSET_DIR = os.path.join(os.path.dirname(__file__), 'assets')
 
 # Initialize constants, variables and get data
 ADFC_orange = '#D78432'
