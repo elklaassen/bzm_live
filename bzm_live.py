@@ -16,7 +16,7 @@ import dash_bootstrap_components as dbc
 import geopandas as gpd
 import pandas as pd
 import plotly.express as px
-from dash import Dash, html, dcc, Output, Input, callback, ctx
+from dash import Dash, html, dcc, Output, Input, callback, ctx, dash_table
 from dash.exceptions import PreventUpdate
 import datetime
 
@@ -260,6 +260,15 @@ traffic_df_upt_dt, min_date, max_date, min_hour, max_hour = filter_dt(traffic_df
 # traffic_df_upt_dt_str
 traffic_df_upt_dt_str = update_selected_street(traffic_df_upt_dt, segment_id, street_name)
 
+data_table = dash_table.DataTable(
+        id='dataTable1',
+        data=traffic_df.to_dict('records'),
+        columns=[{'name': i, 'id': i,'selectable':True} for i in traffic_df.columns],
+        page_size=10,
+        column_selectable="single",
+        selected_columns=['osm.name'],
+        editable=True
+)
 
 ### Prepare map data ###
 if not DEPLOYED:
@@ -308,6 +317,7 @@ app.layout = dbc.Container(
 
         dbc.Row([
             dbc.Col([
+                data_table,
                 html.H1(_('Berlin Counts Mobility'), style={'margin-left': 40, 'margin-top': 20, 'margin-bottom': 00, 'margin-right': 00}, className='bg-#F2F2F2'),
             ], width=5),
             dbc.Col([
