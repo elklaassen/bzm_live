@@ -216,7 +216,7 @@ segment_id = '9000006435'
 
 zoom_factor = 11
 
-init_language = 'de'
+init_language = 'en'
 update_language(init_language)
 
 geo_df, json_df_features, traffic_df = retrieve_data()
@@ -321,15 +321,13 @@ app.layout = dbc.Container(
                     {'label': _('English'), 'value': 'en'},
                     {'label': _('Deutsch'), 'value': 'de'},
                 ],
-                value='de'
+                value='en'
                 ),
             ], width=4),
         ]),
         dbc.Row([
             # Street map
             dbc.Col([
-                html.H6(traffic_df['osm.name'][1], style={'margin-top': 50, 'margin-bottom': 20}),
-                html.H6(traffic_df['car_total'][5], style={'margin-top': 50, 'margin-bottom': 20}),
                 dcc.Graph(id='street_map', figure={},className='bg-#F2F2F2'),
             ], width=8),
 
