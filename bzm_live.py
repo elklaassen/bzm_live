@@ -68,7 +68,8 @@ def retrieve_data():
         print('Reading traffic data...')
     #with common.Benchmarker(not DEPLOYED, "Load traffic data"):
     #traffic_df = bzm_get_data.merge_data(json_df_features)
-    #traffic_file = os.path.join(ASSET_DIR, 'traffic_df_2024_Q4_2025_YTD.csv.gz')
+    traffic_file = os.path.join(ASSET_DIR, 'traffic_df_2024_Q4_2025_YTD.csv.gz')
+    print(traffic_file)
     traffic_file = 'traffic_df_2024_Q4_2025_YTD.csv.gz'
     traffic_df = pd.read_csv(traffic_file)
 
@@ -1111,7 +1112,7 @@ def update_graphs(radio_time_division, radio_time_unit, street_name, dropdown_ye
     return pie_traffic, line_abs_traffic, bar_avg_traffic, line_avg_delta_traffic, bar_perc_speed, bar_avg_speed, bar_v85, sc_explore
 
 if __name__ == "__main__":
-    port = int(8080) #int(os.environ.get('PORT', 8050)) # Default to 8050 if PORT is not set
-    app.run_server(debug=True, port=port)
+    #port = int(8080) #int(os.environ.get('PORT', 8050)) # Default to 8050 if PORT is not set
+    #app.run_server(debug=True, port=port)
     #app.run_server(host='0.0.0.0', port=port)
-    #app.run(host='0.0.0.0', port='10000')
+    app.run_server(debug=False, host='0.0.0.0', port=8080)
