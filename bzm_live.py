@@ -1020,9 +1020,10 @@ def update_graphs(radio_time_division, radio_time_unit, street_name, dropdown_ye
     df_sc_explore.reset_index(inplace=True)
 
     # Assess x and y for annotation
+
     annotation_index= df_sc_explore[df_sc_explore['osm.name'] == street_name].index.item()
     annotation_x = annotation_index
-    annotation_y = df_sc_explore[radio_y_axis].values[annotation_index]
+    annotation_y = df_sc_explore.loc[df_sc_explore['osm.name'] == street_name, radio_y_axis].iloc[0]
 
     sc_explore = px.bar(df_sc_explore,
         x='osm.name', y=radio_y_axis,
@@ -1116,4 +1117,5 @@ if __name__ == "__main__":
     #app.run_server(debug=True, port=port)
     #app.run_server(host='0.0.0.0', port=port)
     #app.run(host='0.0.0.0', port=8080)
-    app.run(host='0.0.0.0', port='8080')
+    #app.run(host='0.0.0.0', port='8080')
+    app.run_server(debug=False)
