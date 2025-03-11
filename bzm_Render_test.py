@@ -621,7 +621,7 @@ def update_graphs(radio_time_division, street_name, start_date, end_date, hour_r
 
     return pie_traffic, line_abs_traffic
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     #app.run_server(debug=False, port=8050)
     #port = int(8080) #int(os.environ.get('PORT', 8050)) # Default to 8050 if PORT is not set
     #app.run_server(debug=True, port=port)
