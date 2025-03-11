@@ -68,9 +68,9 @@ def retrieve_data():
         print('Reading traffic data...')
     #with common.Benchmarker(not DEPLOYED, "Load traffic data"):
     #traffic_df = bzm_get_data.merge_data(json_df_features)
-    #traffic_file = os.path.join(ASSET_DIR, 'traffic_df_2024_Q4_2025_YTD.csv.gz')
+    traffic_file = os.path.join(DATA_DIR, 'traffic_df_2024_Q4_2025_YTD.csv.gz')
     #print(traffic_file)
-    traffic_file = 'traffic_df_2024_Q4_2025_YTD.csv.gz'
+    #traffic_file = '../traffic_df_2024_Q4_2025_YTD.csv.gz'
     traffic_df = pd.read_csv(traffic_file)
 
     """" Can move to bzm_get_data? - Start """
@@ -185,6 +185,7 @@ def update_map_data(df_map_base, df):
 
 
 ASSET_DIR = os.path.join(os.path.dirname(__file__), 'assets')
+DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
 
 # Initialize constants, variables and get data
 ADFC_orange = '#D78432'
@@ -623,7 +624,7 @@ def update_graphs(radio_time_division, street_name, start_date, end_date, hour_r
 
 #if __name__ == "__main__":
     #app.run_server(debug=False, port=8050)
-    #port = int(8080) #int(os.environ.get('PORT', 8050)) # Default to 8050 if PORT is not set
+port = int(os.environ.get('PORT', 8050)) # Default to 8050 if PORT is not set
     #app.run_server(debug=True, port=port)
-    #app.run_server(host='0.0.0.0', port=port)
+app.run_server(host='0.0.0.0', port=port)
     #app.run_server(debug=True)
