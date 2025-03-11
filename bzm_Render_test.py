@@ -16,7 +16,7 @@ import dash_bootstrap_components as dbc
 import geopandas as gpd
 import pandas as pd
 import plotly.express as px
-from dash import Dash, html, dcc, Output, Input, callback, ctx, dash_table
+from dash import Dash, html, dcc, Output, Input, callback, ctx
 from dash.exceptions import PreventUpdate
 import datetime
 
@@ -207,18 +207,18 @@ zoom_factor = 11
 init_language = 'en'
 update_language(init_language)
 
-geo_df, json_df_features, traffic_df = retrieve_data()
+geo_df, json_df_features, traffic_df_upt = retrieve_data()
 
 # Set weekday labels depending on language
 #weekday_map = {'Mon': _('Mon'), 'Tue': _('Tue'), 'Wed': _('Wed'), 'Thu': _('Thu'), 'Fri': _('Fri'), 'Sat': _('Sat'), 'Sun': _('Sun')}
 weekday_map = {0: _('Mon'), 1: _('Tue'), 2: _('Wed'), 3: _('Thu'), 4: _('Fri'), 5: _('Sat'), 6: _('Sun')}
-traffic_df['weekday'] = traffic_df['weekday'].map(weekday_map)
+traffic_df_upt['weekday'] = traffic_df_upt['weekday'].map(weekday_map)
 month_map = {1: _('Jan'), 2: _('Feb'), 3: _('Mar'), 4: _('Apr'), 5: _('May'), 6: _('Jun'), 7: _('Jul'), 8: _('Aug'), 9: _('Sep'), 10: _('Oct'), 11: _('Nov'), 12: _('Dec')}
 #month_map = {'Jan': _('Jan'), 'Feb': _('Feb'), 'Mar': _('Mar'), 'Apr': _('Apr'), 'May': _('May'), 'Jun': _('Jun'), 'Jul': _('Jul'), 'Aug': _('Aug'), 'Sep': _('Sep'), 'Oct': _('Oct'), 'Nov': _('Nov'), 'Dec': _('Dec')}
-traffic_df['month'] = traffic_df['month'].map(month_map)
+traffic_df_upt['month'] = traffic_df_upt['month'].map(month_map) #!!!!
 
 # Start with traffic df with uptime filtered
-traffic_df_upt = filter_uptime(traffic_df)
+# traffic_df_upt = filter_uptime(traffic_df) !!!!
 
 # traffic_df_upt_dt
 start_date = traffic_df_upt['date_local'].min()
@@ -238,16 +238,6 @@ traffic_df_upt_dt, min_date, max_date, min_hour, max_hour = filter_dt(traffic_df
 
 # traffic_df_upt_dt_str
 traffic_df_upt_dt_str = update_selected_street(traffic_df_upt_dt, segment_id, street_name)
-
-data_table = dash_table.DataTable(
-        id='dataTable1',
-        data=traffic_df.to_dict('records'),
-        columns=[{'name': i, 'id': i,'selectable':True} for i in traffic_df.columns],
-        page_size=10,
-        column_selectable="single",
-        selected_columns=['osm.name'],
-        editable=True
-)
 
 ### Prepare map data ###
 if not DEPLOYED:
@@ -325,7 +315,7 @@ app.layout = dbc.Container(
                 # Street drop down
                 html.H4(_('Select street:'), style={'margin-top': 50, 'margin-bottom': 20}),
                 dcc.Dropdown(id='street_name_dd',
-                    options=sorted([{'label': i, 'value': i} for i in traffic_df['osm.name'].unique()], key=lambda x: x['label']),
+                    options=sorted([{'label': i, 'value': i} for i in traffic_df_upt['osm.name'].unique()], key=lambda x: x['label']),
                     value=street_name,
                     style={'margin-top': 10, 'margin-bottom': 30}
                 ),
@@ -556,10 +546,10 @@ def update_map(street_name, date_filter, range_slider):
 def update_graphs(radio_time_division, street_name, start_date, end_date, hour_range, toggle_uptime_filter):
 
     # If uptime filter changed, reload traffic_df_upt
-    if 'filter_uptime_selected' in toggle_uptime_filter:
-        traffic_df_upt = filter_uptime(traffic_df)
-    else:
-        traffic_df_upt = traffic_df
+    #if 'filter_uptime_selected' in toggle_uptime_filter:
+    #    traffic_df_upt = filter_uptime(traffic_df)
+    #else:
+    #    traffic_df_upt = traffic_df
 
     # Filter on selected dates and hours
     # TODO: trigger only in case of relevant callback
