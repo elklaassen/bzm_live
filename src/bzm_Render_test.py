@@ -624,7 +624,7 @@ def update_graphs(radio_time_division, street_name, start_date, end_date, hour_r
 
 #if __name__ == "__main__":
     #app.run_server(debug=False, port=8050)
-port = int(os.environ.get('PORT', 8050)) # Default to 8050 if PORT is not set
+    # port = int(os.environ.get('PORT', 8050)) # Default to 8050 if PORT is not set
     #app.run_server(debug=True, port=port)
-app.run_server(host='0.0.0.0', port=port)
+    # app.run_server(host='0.0.0.0', port=port)
     #app.run_server(debug=True)
