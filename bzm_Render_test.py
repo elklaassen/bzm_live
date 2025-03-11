@@ -618,4 +618,4 @@ def update_graphs(radio_time_division, street_name, start_date, end_date, hour_r
     #app.run_server(debug=True, port=port)
     # app.run_server(host='0.0.0.0', port=port)
     #app.run_server(debug=True)
-app.run_server(host='0.0.0.0', port=10000)
+    #app.run_server(host='0.0.0.0', port=10000)
