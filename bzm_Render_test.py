@@ -208,15 +208,6 @@ update_language(init_language)
 
 geo_df, json_df_features, traffic_df = retrieve_data()
 
-# TODO: Check correct weekdays
-#given_date = datetime.datetime.strptime('2025-02-27 12:00:00', '%Y-%m-%d %H:%M:%S')
-#given_date = convert('2025-02-27 12:00:00', '%Y-%m-%d %H:%M:%S')
-#day_of_week = given_date.dt.dayofweek()
-#day_of_week = given_date.weekday() #3
-#day_of_week = given_date.isoweekday() #4
-#day_of_week = calendar.weekday(2025,11,27) #3
-#print(day_of_week)
-
 # Set weekday labels depending on language
 #weekday_map = {'Mon': _('Mon'), 'Tue': _('Tue'), 'Wed': _('Wed'), 'Thu': _('Thu'), 'Fri': _('Fri'), 'Sat': _('Sat'), 'Sun': _('Sun')}
 weekday_map = {0: _('Mon'), 1: _('Tue'), 2: _('Wed'), 3: _('Thu'), 4: _('Fri'), 5: _('Sat'), 6: _('Sun')}
@@ -294,7 +285,7 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP, dbc.icons.BOOTS
            meta_tags=[{'name': 'viewport', 'content': 'width=device-width, initial-scale=1'}]
            )
 
-server = app.server # 'application' required for AWS
+server = app.server
 
 app.layout = dbc.Container(
     [
@@ -631,7 +622,7 @@ def update_graphs(radio_time_division, street_name, start_date, end_date, hour_r
     return pie_traffic, line_abs_traffic
 
 if __name__ == "__main__":
-    app.run_server(debug=False, port=8050)
+    #app.run_server(debug=False, port=8050)
     #port = int(8080) #int(os.environ.get('PORT', 8050)) # Default to 8050 if PORT is not set
     #app.run_server(debug=True, port=port)
     #app.run_server(host='0.0.0.0', port=port)
